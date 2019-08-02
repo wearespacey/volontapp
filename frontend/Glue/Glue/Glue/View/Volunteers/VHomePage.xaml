@@ -3,17 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewmodel="clr-namespace:Glue.ViewModel"
              mc:Ignorable="d"
-             x:Class="Glue.View.LoginPage">
-    <ContentPage.BindingContext>
-        <viewmodel:LoginViewModel/>
-    </ContentPage.BindingContext>
+             x:Class="Glue.View.Volunteers.VHomePage">
     <ContentPage.Content>
-        
         <StackLayout>
-            <Button x:Name="Coordinators" Text="Connexion en tant que coordinateur" Clicked="OnCoordinatorsClicked"/>
-            <Button x:Name="Volunteers" Text="Connexion en tant que volontaire" Clicked="OnVolunteersClicked"/>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
