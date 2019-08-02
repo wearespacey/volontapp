@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -9,9 +12,9 @@ namespace VolontApp.DAL.Repositories
     {
         private readonly IDocumentStore _store;
 
-        public RepositoryBase(IDocumentStoreHolder documentHolder)
+        public RepositoryBase(IDocumentStoreHolder documentStoreHolder)
         {
-            this._store = documentHolder.Store;
+            this._store = documentStoreHolder.Store;
         }
 
         public string Create(T entity, string entityId)
@@ -39,7 +42,25 @@ namespace VolontApp.DAL.Repositories
 
             return entityId;
         }
+        /*Change by David */
+        public IEnumerable<T> ReadAll()
+        {
+            using(IDocumentSession session = this._store.OpenSession())
+            {
+                return session.Query<T>().ToList();
+            }
+        }
 
+        public async Task<IEnumerable<T>> ReadAllAsync()
+        {
+            using (IAsyncDocumentSession session = this._store.OpenAsyncSession())
+            {
+               
+                return await session.Query<T>().ToListAsync();
+            }
+        }
+
+        /*Change by David */
         public T Read(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException();
@@ -104,3 +125,4 @@ namespace VolontApp.DAL.Repositories
             }
         }
     }
+}
