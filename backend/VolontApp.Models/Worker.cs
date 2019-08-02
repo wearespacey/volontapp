@@ -2,9 +2,6 @@ namespace VolontApp.Models
 {
     public class Worker
     {
-        public Worker()
-        {}
-
         public string Id { get; set; }
 
         public string FirstName { get; set; }
