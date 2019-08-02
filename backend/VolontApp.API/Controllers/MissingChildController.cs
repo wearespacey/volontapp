@@ -13,26 +13,26 @@ namespace VolontApp.API.Controllers
     [ApiController]
     public class MissingChildController : ControllerBase
     {
-        private readonly MissingChildRepository _MissingChildRepository;
+        public MissingChildRepository MissingChildRepository { get; set; }
         // GET: api/MissingChild
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MissingChild>>> Get()
         {
-            return Ok(await _MissingChildRepository.ReadAllAsync());
+            return Ok(await MissingChildRepository.ReadAllAsync());
         }
 
         // GET: api/MissingChild/5
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<MissingChild>> Get(string id)
         {
-            return Ok(await _MissingChildRepository.ReadAsync(id));
+            return Ok(await MissingChildRepository.ReadAsync(id));
         }
 
         // POST: api/MissingChild
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] MissingChild value)
         {
-            await _MissingChildRepository.CreateAsync(value, Guid.NewGuid().ToString());
+            await MissingChildRepository.CreateAsync(value, Guid.NewGuid().ToString());
             return Ok();
         }
 
@@ -40,15 +40,15 @@ namespace VolontApp.API.Controllers
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] MissingChild value)
         {
-            await _MissingChildRepository.UpdateAsync(value);
+            await MissingChildRepository.UpdateAsync(value);
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/MissingChild/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            await _MissingChildRepository.DeleteAsync(id);
+            await MissingChildRepository.DeleteAsync(id);
             return Ok();
         }
     }

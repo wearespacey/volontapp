@@ -4,7 +4,7 @@ namespace VolontApp.DAL.Repositories
 {
     public class CoordinatorRepository : RepositoryBase<Coordinator>
     {
-        public CoordinatorRepository(IDocumentStoreHolder documentHolder) : base(documentHolder)
+        public CoordinatorRepository(IDocumentStoreHolder documentStoreHolder) : base(documentStoreHolder)
         { }
     }
 }

@@ -14,26 +14,27 @@ namespace VolontApp.API.Controllers
     public class CoordinatorController : ControllerBase
     {
 
-        private readonly CoordinatorRepository _CoordinatorRepository;
+        public CoordinatorRepository CoordinatorRepository { get; set; }
+
         // GET: api/Coordinator
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Coordinator>>> Get()
         {
-            return Ok(await _CoordinatorRepository.ReadAllAsync());
+            return Ok(await CoordinatorRepository.ReadAllAsync());
         }
 
         // GET: api/Coordinator/5
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<Coordinator>> Get(string id)
         {
-            return Ok(_CoordinatorRepository.ReadAsync(id));
+            return Ok(CoordinatorRepository.ReadAsync(id));
         }
 
         // POST: api/Coordinator
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Coordinator value)
         {
-            await _CoordinatorRepository.CreateAsync(value, Guid.NewGuid().ToString());
+            await CoordinatorRepository.CreateAsync(value, Guid.NewGuid().ToString());
             return Ok();
         }
 
@@ -41,15 +42,15 @@ namespace VolontApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put([FromBody] Coordinator value)
         {
-            await _CoordinatorRepository.UpdateAsync(value);
+            await CoordinatorRepository.UpdateAsync(value);
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Coordinator/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            await _CoordinatorRepository.DeleteAsync(id);
+            await CoordinatorRepository.DeleteAsync(id);
             return Ok();
         }
     }

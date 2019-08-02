@@ -39,10 +39,9 @@ namespace VolontApp.DAL.Repositories
                 await session.StoreAsync(entity, entityId);
                 await session.SaveChangesAsync();
             }
-
             return entityId;
         }
-        /*Change by David */
+
         public IEnumerable<T> ReadAll()
         {
             using(IDocumentSession session = this._store.OpenSession())
@@ -55,12 +54,10 @@ namespace VolontApp.DAL.Repositories
         {
             using (IAsyncDocumentSession session = this._store.OpenAsyncSession())
             {
-               
                 return await session.Query<T>().ToListAsync();
             }
         }
 
-        /*Change by David */
         public T Read(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException();
