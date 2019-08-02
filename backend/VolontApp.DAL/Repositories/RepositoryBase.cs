@@ -9,9 +9,9 @@ namespace VolontApp.DAL.Repositories
     {
         private readonly IDocumentStore _store;
 
-        public RepositoryBase(IDocumentStoreHolder documentHolder)
+        public RepositoryBase(IDocumentStoreHolder documentStoreHolder)
         {
-            this._store = documentHolder.Store;
+            this._store = documentStoreHolder.Store;
         }
 
         public string Create(T entity, string entityId)
@@ -104,3 +104,4 @@ namespace VolontApp.DAL.Repositories
             }
         }
     }
+}
