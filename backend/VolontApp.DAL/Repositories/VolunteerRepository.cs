@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using VolontApp.Models;
 
@@ -45,6 +49,26 @@ namespace VolontApp.DAL.Repositories
                 }
 
                 return volunteers;
+            }
+        }
+
+        public Volunteer ReadByInstallId(string installId)
+        {
+            if (string.IsNullOrWhiteSpace(installId)) throw new ArgumentNullException(nameof(installId));
+
+            using (IDocumentSession session = this.Store.OpenSession())
+            {
+                return session.Query<Volunteer>().FirstOrDefault(v => v.InstallId == installId);
+            }
+        }
+
+        public Task<Volunteer> ReadByInstallIdAsync(string installId)
+        {
+            if (string.IsNullOrWhiteSpace(installId)) throw new ArgumentNullException(nameof(installId));
+
+            using (IDocumentSession session = this.Store.OpenSession())
+            {
+                return session.Query<Volunteer>().FirstOrDefaultAsync(v => v.InstallId == installId);
             }
         }
     }

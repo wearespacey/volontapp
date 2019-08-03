@@ -29,14 +29,14 @@ namespace VolontApp.API.Controllers
         }
 
         // GET: api/Case/5
-        [HttpGet("{id}")]
+        [HttpGet("{caseId}")]
         public async Task<ActionResult<Case>> GetById(string id)
         {
             return Ok(await CaseRepository.ReadAsync(id));
         }
 
-        // GET: api/Case/5
-        [HttpGet("ByMissingChild/{id}")]
+        // GET: api/Case/ByMissingChild/5
+        [HttpGet("ByMissingChild/{caseId}")]
         public async Task<ActionResult<Case>> GetByMissingChild(string id, [FromBody] string installId)
         {
             return Ok((await CaseRepository.ReadAllAsync())
@@ -51,26 +51,30 @@ namespace VolontApp.API.Controllers
         }
 
         // PUT: api/Case/5
-        [HttpPut("{id}")]
+        [HttpPut("{caseId}")]
         public async Task<ActionResult> Put(string id, [FromBody] Case value)
         {
             await CaseRepository.UpdateAsync(value, id);
             return Ok();
         }
 
-        // PUT: api/Case/AddVolunteer/5
-        [HttpPut("AddVolunteer/{id}")]
-        public async Task<ActionResult<Case>> AddVolunteer(string id, [FromBody] string installId)
+        // PUT: api/Case/5/AddVolunteer
+        [HttpPut("{caseId}/AddVolunteer")]
+        public async Task<ActionResult<Case>> AddVolunteer(string caseId, [FromBody] string installId)
         {
-            Case caseToUpDate = await CaseRepository.ReadAsync(id);
-            Volunteer volunteerToAdd = (await VolunteerRepository.ReadAllAsync()).ToList().FirstOrDefault(v => v.InstallId == installId);
-            caseToUpDate.Volunteers.Add(volunteerToAdd);
-            await CaseRepository.UpdateAsync(caseToUpDate, id);
-            return Ok();
+            Case caseToUpDate = await CaseRepository.ReadAsync(caseId);
+            Volunteer volunteerToAdd = await VolunteerRepository.ReadByInstallIdAsync(installId);
+
+            if (caseToUpDate.VolunteerIds == null) caseToUpDate.VolunteerIds = new List<string>();
+            caseToUpDate.VolunteerIds.Add(volunteerToAdd.Id);
+
+            await CaseRepository.UpdateAsync(caseToUpDate, caseId);
+
+            return Ok(await CaseRepository.ReadAsync(caseId));
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{caseId}")]
         public async Task<ActionResult> Delete(string id)
         {
             await CaseRepository.DeleteAsync(id);
