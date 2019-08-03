@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
@@ -40,37 +39,33 @@ namespace VolontApp.API.Controllers
         [HttpGet("ByMissingChild/{id}")]
         public async Task<ActionResult<Case>> GetByMissingChild(string id, [FromBody] string installId)
         {
-            return Ok((await CaseRepository.ReadAllAsync()).ToList()
-                .Where(c => c.MissingStatus != MissingStatus.Found)
-                .FirstOrDefault(c => c.MissingChild.Id == id && c.Coordinator.InstallId == installId));
+            return Ok((await CaseRepository.ReadAllAsync())
+                .FirstOrDefault(c => c.MissingStatus != MissingStatus.Found && c.Child.Id == id && c.Coordinator.InstallId == installId));
         }
 
         // POST: api/Case
         [HttpPost]
         public async Task<ActionResult<string>> Post([FromBody] Case value)
         {
-            string caseCreatedId = Guid.NewGuid().ToString();
-            await CaseRepository.CreateAsync(value, caseCreatedId);
-            return Ok(caseCreatedId);
+            return Ok(await CaseRepository.CreateAsync(value, Guid.NewGuid().ToString()));
         }
-        //cas id gamin
-        // PUT: api/Case
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Case value)
+
+        // PUT: api/Case/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, [FromBody] Case value)
         {
-            await CaseRepository.UpdateAsync(value);
+            await CaseRepository.UpdateAsync(value, id);
             return Ok();
         }
 
         // PUT: api/Case/AddVolunteer/5
         [HttpPut("AddVolunteer/{id}")]
-        public async Task<ActionResult<Case>> AddVolunteer(string id,[FromBody] string installId)
+        public async Task<ActionResult<Case>> AddVolunteer(string id, [FromBody] string installId)
         {
             Case caseToUpDate = await CaseRepository.ReadAsync(id);
             Volunteer volunteerToAdd = (await VolunteerRepository.ReadAllAsync()).ToList().FirstOrDefault(v => v.InstallId == installId);
-
             caseToUpDate.Volunteers.Add(volunteerToAdd);
-            await CaseRepository.UpdateAsync(caseToUpDate);
+            await CaseRepository.UpdateAsync(caseToUpDate, id);
             return Ok();
         }
 
