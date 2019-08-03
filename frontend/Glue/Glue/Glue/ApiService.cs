@@ -44,6 +44,13 @@ namespace Glue.Services
 
         public static async Task<IEnumerable<Model.Volunteer>> GetAllVolunteersAsync()
         {
+            return new List<Model.Volunteer>()
+            {
+                new Model.Volunteer(){Id="test1", FirstName="Tobias", Surname="Jetzen" },
+                new Model.Volunteer(){Id="test2", FirstName="Tinael", Surname="Devresse" },
+                new Model.Volunteer(){Id="test3", FirstName="Stephanie", Surname="Bemelmans" },
+                new Model.Volunteer(){Id="test4", FirstName="David", Surname="Servais"}
+            };
             HttpResponseMessage response = await client.GetAsync("api/display");
             if (response.IsSuccessStatusCode)
             {

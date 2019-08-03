@@ -10,19 +10,21 @@ namespace Glue.ViewModel
 {
     class CNotifyViewModel
     {
-        public ObservableCollection<Model.Volunteer> VolunteerList { get; private set; }
+        public ObservableCollection<Model.Displayers.VolunteerLight> VolunteerList { get; private set; }
 
         public CNotifyViewModel()
         {
-            VolunteerList = new ObservableCollection<Model.Volunteer>();
+            VolunteerList = new ObservableCollection<Model.Displayers.VolunteerLight>();
         }
 
-        internal async Task GetItem()
+        internal async Task LoadVolunteerList()
         {
             try
             {
                 var items = await ApiService.GetAllVolunteersAsync();
-                VolunteerList = new ObservableCollection<Model.Volunteer>(items);
+                foreach (var i in items)
+                    VolunteerList.Add(new Model.Displayers.VolunteerLight(i));
+
             }
             catch (Exception ex)
             {

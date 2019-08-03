@@ -6,5 +6,6 @@ namespace Glue.Model
 {
     public class Volunteer : Worker
     {
+        public bool IsNotified { get; set; }
     }
 }

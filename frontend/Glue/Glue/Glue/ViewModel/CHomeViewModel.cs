@@ -5,24 +5,26 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Glue.ViewModel
 {
     public class CHomeViewModel
     {
-        public ObservableCollection<Model.Display> DisplayList { get; private set; }
+        public ObservableCollection<Model.Displayers.DisplayLight> DisplayList { get; private set; }
 
         public CHomeViewModel()
         {
-            DisplayList = new ObservableCollection<Model.Display>();
+            DisplayList = new ObservableCollection<Model.Displayers.DisplayLight>();
         }
 
-        internal async Task GetDisplayList()
+        internal async Task LoadDisplayList()
         {
             try
             {
                 var items = await ApiService.GetAllDisplaysAsync();
-                DisplayList = new ObservableCollection<Model.Display>(items);
+                foreach(var i in items)
+                    DisplayList.Add(new Model.Displayers.DisplayLight(i));
             }
             catch (Exception ex)
             {

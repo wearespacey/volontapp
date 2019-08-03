@@ -12,18 +12,20 @@
 </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding VolunteerList}">
+            <Button Clicked="OnBtnSelectAll_Click" Text="Selectionner tous"></Button>
+            <ListView x:Name="VolunteerListView" ItemsSource="{Binding VolunteerList}" CachingStrategy="RecycleElement" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="CheckBox Demonstration" Grid.Row="0"/>
-                            <CheckBox IsChecked="{Binding IsNotified }" />
-                        </Grid>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.8*" />
+                                    <ColumnDefinition Width="0.2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Name}" Grid.Column="0"/>
+                                <CheckBox IsChecked="{Binding IsNotified}" Grid.Column="1"/>
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
