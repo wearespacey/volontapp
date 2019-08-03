@@ -16,7 +16,7 @@ namespace VolontApp.DAL.Repositories
             this.Store = documentStoreHolder.Store;
         }
 
-        public string Create(T entity, string id)
+        public virtual string Create(T entity, string id)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
@@ -30,7 +30,7 @@ namespace VolontApp.DAL.Repositories
             return id;
         }
 
-        public async Task<string> CreateAsync(T entity, string id)
+        public virtual async Task<string> CreateAsync(T entity, string id)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
@@ -43,7 +43,7 @@ namespace VolontApp.DAL.Repositories
             return id;
         }
 
-        public IEnumerable<T> ReadAll()
+        public virtual IEnumerable<T> ReadAll()
         {
             using(IDocumentSession session = this.Store.OpenSession())
             {
@@ -51,7 +51,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public async Task<IEnumerable<T>> ReadAllAsync()
+        public virtual async Task<IEnumerable<T>> ReadAllAsync()
         {
             using (IAsyncDocumentSession session = this.Store.OpenAsyncSession())
             {
@@ -59,7 +59,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public T Read(string id)
+        public virtual T Read(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
@@ -69,7 +69,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public Task<T> ReadAsync(string id)
+        public virtual Task<T> ReadAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
@@ -79,7 +79,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public void Update(string id, T entity)
+        public virtual void Update(T entity, string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
             if (entity == null) throw new ArgumentNullException(nameof(entity));
@@ -91,7 +91,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public async Task UpdateAsync(string id, T entity)
+        public virtual async Task UpdateAsync(T entity, string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
             if (entity == null) throw new ArgumentNullException(nameof(entity));
@@ -103,7 +103,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public void Delete(string id)
+        public virtual void Delete(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
@@ -114,7 +114,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public async Task DeleteAsync(string id)
+        public virtual async Task DeleteAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 

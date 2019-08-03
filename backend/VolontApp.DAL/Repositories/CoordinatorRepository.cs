@@ -11,7 +11,7 @@ namespace VolontApp.DAL.Repositories
         public CoordinatorRepository(IDocumentStoreHolder documentStoreHolder) : base(documentStoreHolder)
         { }
 
-        public new string Create(Coordinator entity, string id)
+        public override string Create(Coordinator entity, string id)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
@@ -37,7 +37,7 @@ namespace VolontApp.DAL.Repositories
             return id;
         }
 
-        public new async Task<string> CreateAsync(Coordinator entity, string id)
+        public override async Task<string> CreateAsync(Coordinator entity, string id)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
@@ -62,7 +62,7 @@ namespace VolontApp.DAL.Repositories
             return id;
         }
         
-        public new Coordinator Read(string id)
+        public override Coordinator Read(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
@@ -86,7 +86,7 @@ namespace VolontApp.DAL.Repositories
             }
         }
 
-        public new async Task<Coordinator> ReadAsync(string id)
+        public override async Task<Coordinator> ReadAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
 
