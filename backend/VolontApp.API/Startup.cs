@@ -26,7 +26,7 @@ namespace VolontApp.API
             services.AddSingleton<IDocumentStoreHolder, DocumentStoreHolder>();
             services.AddScoped<CoordinatorRepository>();
             services.AddScoped<DisplayRepository>();
-            services.AddScoped<MissingChildRepository>();
+            services.AddScoped<ChildRepository>();
             services.AddScoped<VolunteerRepository>();
         }
 
@@ -48,7 +48,7 @@ namespace VolontApp.API
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "api/{controller=MissingChild}/{action=GetAll}/{id?}");
+                    template: "api/{controller=Child}/{action=GetAll}/{id?}");
             });
         }
     }
