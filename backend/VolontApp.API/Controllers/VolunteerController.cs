@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
@@ -14,19 +12,33 @@ namespace VolontApp.API.Controllers
     public class VolunteerController : ControllerBase
     {
         public VolunteerRepository VolunteerRepository { get; set; }
+
+        public VolunteerController(VolunteerRepository volunteerRepository)
+        {
+            this.VolunteerRepository = volunteerRepository;
+        }
+
         // GET: api/Volunteer
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Volunteer>>> Get()
+        public async Task<ActionResult<IEnumerable<Volunteer>>> GetAll()
         {
             return Ok(await VolunteerRepository.ReadAllAsync());
         }
 
         // GET: api/Volunteer/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<Volunteer>> Get(string id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Volunteer>> GetById(string id)
         {
             return Ok(await VolunteerRepository.ReadAsync(id));
         }
+
+        // GET: api/Volunteer/ByCoordinator/5
+        [HttpGet("ByCoordinator/{id}")]
+        public async Task<ActionResult<IEnumerable<Volunteer>>> GetByCoordinatorId(string id)
+        {
+            return Ok(await VolunteerRepository.ReadAllByCoordinatorAsync(id));
+        }
+
 
         // POST: api/Volunteer
         [HttpPost]
@@ -37,10 +49,10 @@ namespace VolontApp.API.Controllers
         }
 
         // PUT: api/Volunteer/5
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Volunteer value)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, [FromBody] Volunteer value)
         {
-            await VolunteerRepository.UpdateAsync(value);
+            await VolunteerRepository.UpdateAsync(id, value);
             return Ok();
         }
 

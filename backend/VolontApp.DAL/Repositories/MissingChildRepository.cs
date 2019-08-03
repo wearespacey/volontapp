@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using VolontApp.Models;
+﻿using VolontApp.Models;
 
 namespace VolontApp.DAL.Repositories
 {
