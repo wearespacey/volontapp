@@ -3,13 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodel="clr-namespace:Glue.ViewModel"
              mc:Ignorable="d"
-             x:Class="Glue.View.Coordinators.CHomePage">
+             x:Class="Glue.View.Coordinators.CHomePage"
+             Title="Enfants disparus">
+    <ContentPage.BindingContext>
+        <viewmodel:CHomeViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding DisplayList}" CachingStrategy="RecycleElement">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.6*" />
+                                    <ColumnDefinition Width="0.2*" />
+                                    <ColumnDefinition Width="0.2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Id}" Grid.Column="0"/>
+                                <Button Text="Imprimer" Grid.Column="1"/>
+                                <Button Text="Notifier" Clicked="BtnClick_Notify" Grid.Column="2"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

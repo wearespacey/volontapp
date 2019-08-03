@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodel="clr-namespace:Glue.ViewModel"
+             mc:Ignorable="d"
+             x:Class="Glue.View.Coordinators.CNotifyPage"
+             Title="Contacter équipe">
+<ContentPage.BindingContext>
+    <viewmodel:CNotifyViewModel/>
+</ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding VolunteerList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="CheckBox Demonstration" Grid.Row="0"/>
+                            <CheckBox IsChecked="{Binding IsNotified }" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Notifier" Clicked="OnNotify_Click"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
