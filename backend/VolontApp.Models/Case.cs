@@ -10,13 +10,13 @@ namespace VolontApp.Models
         public string Id { get; set; }
 
         public string CoordinatorId { get; set; }
-        public Coordinator Coordinator { get; set; } = null;
+        public Coordinator Coordinator { get; set; }
 
-        public List<string> VolunteerIds { get; set; } = null;
-        public List<Volunteer> Volunteers { get; set; } = null;
+        public List<string> VolunteerIds { get; set; }
+        public List<Volunteer> Volunteers { get; set; }
 
         public string ChildId { get; set; }
-        public Child Child { get; set; } = null;
+        public Child Child { get; set; }
 
         public MissingStatus MissingStatus { get; set; } = MissingStatus.Missing;
 
