@@ -52,7 +52,7 @@ namespace VolontApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Volunteer value)
         {
-            await VolunteerRepository.UpdateAsync(id, value);
+            await VolunteerRepository.UpdateAsync(value, id);
             return Ok();
         }
 
