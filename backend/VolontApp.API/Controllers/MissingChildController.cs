@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
@@ -14,16 +12,22 @@ namespace VolontApp.API.Controllers
     public class MissingChildController : ControllerBase
     {
         public MissingChildRepository MissingChildRepository { get; set; }
+
+        public MissingChildController (MissingChildRepository missingChildRepository)
+        {
+            this.MissingChildRepository = missingChildRepository;
+        }
+
         // GET: api/MissingChild
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MissingChild>>> Get()
+        public async Task<ActionResult<IEnumerable<MissingChild>>> GetAll()
         {
             return Ok(await MissingChildRepository.ReadAllAsync());
         }
 
         // GET: api/MissingChild/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<MissingChild>> Get(string id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MissingChild>> GetById(string id)
         {
             return Ok(await MissingChildRepository.ReadAsync(id));
         }
@@ -37,10 +41,10 @@ namespace VolontApp.API.Controllers
         }
 
         // PUT: api/MissingChild/5
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] MissingChild value)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, [FromBody] MissingChild value)
         {
-            await MissingChildRepository.UpdateAsync(value);
+            await MissingChildRepository.UpdateAsync(id, value);
             return Ok();
         }
 
