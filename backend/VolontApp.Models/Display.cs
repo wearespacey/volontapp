@@ -4,7 +4,7 @@ namespace VolontApp.Models
 {
     public class Display
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
         public Coordinates Location { get; set; } = new Coordinates();
 
