@@ -2,10 +2,12 @@
 {
     public class RavenSettings
     {
-        public string Url { get; set; }
+        public string[] Urls { get; set; }
 
-        public string DefaultDatabase { get; set; }
+        public string Database { get; set; }
 
         public string CertificatePath { get; set; }
+
+        public string CertificatePassword { get; set; }
     }
 }
