@@ -28,7 +28,7 @@ namespace VolontApp.API.Controllers
 
         // GET: api/Coordinator/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Coordinator>> GetById([FromRoute] string id)
+        public async Task<ActionResult<Coordinator>> GetById(string id)
         {
             return Ok(await CoordinatorRepository.ReadAsync(id));
         }
