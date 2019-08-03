@@ -26,8 +26,9 @@ namespace VolontApp.API
             services.AddSingleton<IDocumentStoreHolder, DocumentStoreHolder>();
             services.AddScoped<CoordinatorRepository>();
             services.AddScoped<DisplayRepository>();
-            services.AddScoped<MissingChildRepository>();
+            services.AddScoped<ChildRepository>();
             services.AddScoped<VolunteerRepository>();
+            services.AddScoped<CaseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +49,7 @@ namespace VolontApp.API
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "api/{controller=MissingChild}/{action=GetAll}/{id?}");
+                    template: "api/{controller=Child}/{action=GetAll}/{id?}");
             });
         }
     }

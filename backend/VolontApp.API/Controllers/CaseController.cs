@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
@@ -36,42 +35,42 @@ namespace VolontApp.API.Controllers
             return Ok(await CaseRepository.ReadAsync(id));
         }
 
-        // GET: api/Case/5
-        [HttpGet("ByMissingChild/{id}")]
-        public async Task<ActionResult<Case>> GetByMissingChild(string id, [FromBody] string installId)
+        // GET: api/Case/ByChildAndCoordinator/5
+        [HttpGet("ByChildAndCoordinator/{childId}")]
+        public async Task<ActionResult<Case>> GetByChildAndCoordinator(string childId, [FromBody] string installId)
         {
-            return Ok((await CaseRepository.ReadAllAsync()).ToList()
-                .Where(c => c.MissingStatus != MissingStatus.Found)
-                .FirstOrDefault(c => c.MissingChild.Id == id && c.Coordinator.InstallId == installId));
+            return Ok((await CaseRepository.ReadAllAsync())
+                .FirstOrDefault(c => c.MissingStatus != MissingStatus.Found && c.Child.Id == childId && c.Coordinator.InstallId == installId));
         }
 
         // POST: api/Case
         [HttpPost]
         public async Task<ActionResult<string>> Post([FromBody] Case value)
         {
-            string caseCreatedId = Guid.NewGuid().ToString();
-            await CaseRepository.CreateAsync(value, caseCreatedId);
-            return Ok(caseCreatedId);
+            return Ok(await CaseRepository.CreateAsync(value, Guid.NewGuid().ToString()));
         }
-        //cas id gamin
-        // PUT: api/Case
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Case value)
+
+        // PUT: api/Case/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(string id, [FromBody] Case value)
         {
-            await CaseRepository.UpdateAsync(value);
+            await CaseRepository.UpdateAsync(value, id);
             return Ok();
         }
 
-        // PUT: api/Case/AddVolunteer/5
-        [HttpPut("AddVolunteer/{id}")]
-        public async Task<ActionResult<Case>> AddVolunteer(string id,[FromBody] string installId)
+        // PUT: api/Case/5/AddVolunteer
+        [HttpPut("{id}/AddVolunteer")]
+        public async Task<ActionResult<Case>> AddVolunteer(string id, [FromBody] string installId)
         {
             Case caseToUpDate = await CaseRepository.ReadAsync(id);
-            Volunteer volunteerToAdd = (await VolunteerRepository.ReadAllAsync()).ToList().FirstOrDefault(v => v.InstallId == installId);
+            Volunteer volunteerToAdd = await VolunteerRepository.ReadByInstallIdAsync(installId);
 
-            caseToUpDate.Volunteers.Add(volunteerToAdd);
-            await CaseRepository.UpdateAsync(caseToUpDate);
-            return Ok();
+            if (caseToUpDate.VolunteerIds == null) caseToUpDate.VolunteerIds = new List<string>();
+            caseToUpDate.VolunteerIds.Add(volunteerToAdd.Id);
+
+            await CaseRepository.UpdateAsync(caseToUpDate, id);
+
+            return Ok(await CaseRepository.ReadAsync(id));
         }
 
         // DELETE: api/ApiWithActions/5

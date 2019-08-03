@@ -45,7 +45,7 @@ namespace VolontApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Coordinator value)
         {
-            await CoordinatorRepository.UpdateAsync(id, value);
+            await CoordinatorRepository.UpdateAsync(value, id);
             return Ok();
         }
 

@@ -16,10 +16,4 @@
     <ProjectReference Include="..\VolontApp.Models\VolontApp.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="client.pfx">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

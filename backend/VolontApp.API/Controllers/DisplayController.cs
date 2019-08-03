@@ -44,7 +44,7 @@ namespace VolontApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Display value)
         {
-            await DisplayRepository.UpdateAsync(id, value);
+            await DisplayRepository.UpdateAsync(value, id);
             return Ok();
         }
 

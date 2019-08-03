@@ -81,26 +81,12 @@ namespace VolontApp.DAL.Repositories
 
         public virtual void Update(T entity, string id)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-
-            using (IDocumentSession session = this.Store.OpenSession())
-            {
-                session.Store(entity, id);
-                session.SaveChanges();
-            }
+            this.Create(entity, id);
         }
 
-        public virtual async Task UpdateAsync(T entity, string id)
+        public async Task UpdateAsync(T entity, string id)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-
-            using (IAsyncDocumentSession session = this.Store.OpenAsyncSession())
-            {
-                await session.StoreAsync(entity, id);
-                await session.SaveChangesAsync();
-            }
+            await this.CreateAsync(entity, id);
         }
 
         public virtual void Delete(string id)
