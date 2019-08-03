@@ -3,13 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Converter="clr-namespace:Glue.Converter"
+             xmlns:viewmodel="clr-namespace:Glue.ViewModel.Volunteers"
              mc:Ignorable="d"
-             x:Class="Glue.View.Volunteers.VHomePage">
+             x:Class="Glue.View.Volunteers.VHomePage"
+             Title="Enfants disparus">
+    <ContentPage.BindingContext>
+        <viewmodel:VHomeViewModel/>
+    </ContentPage.BindingContext>
+    <Page.Resources>
+        <Converter:StateToBackgroundColor x:Key="BackgroundColorConverter"/>
+    </Page.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="{}">
+                                
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
