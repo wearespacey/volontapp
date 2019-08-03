@@ -28,6 +28,7 @@ namespace VolontApp.API
             services.AddScoped<DisplayRepository>();
             services.AddScoped<ChildRepository>();
             services.AddScoped<VolunteerRepository>();
+            services.AddScoped<CaseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
