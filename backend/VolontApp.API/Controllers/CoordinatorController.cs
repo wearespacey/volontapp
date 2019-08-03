@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
@@ -16,18 +14,23 @@ namespace VolontApp.API.Controllers
 
         public CoordinatorRepository CoordinatorRepository { get; set; }
 
+        public CoordinatorController(CoordinatorRepository coordinatorRepository)
+        {
+            this.CoordinatorRepository = coordinatorRepository;
+        }
+
         // GET: api/Coordinator
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Coordinator>>> Get()
+        public async Task<ActionResult<IEnumerable<Coordinator>>> GetAll()
         {
             return Ok(await CoordinatorRepository.ReadAllAsync());
         }
 
         // GET: api/Coordinator/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<Coordinator>> Get(string id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Coordinator>> GetById([FromRoute] string id)
         {
-            return Ok(CoordinatorRepository.ReadAsync(id));
+            return Ok(await CoordinatorRepository.ReadAsync(id));
         }
 
         // POST: api/Coordinator
@@ -40,9 +43,9 @@ namespace VolontApp.API.Controllers
 
         // PUT: api/Coordinator/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromBody] Coordinator value)
+        public async Task<ActionResult> Put(string id, [FromBody] Coordinator value)
         {
-            await CoordinatorRepository.UpdateAsync(value);
+            await CoordinatorRepository.UpdateAsync(id, value);
             return Ok();
         }
 
