@@ -60,6 +60,16 @@ namespace VolontApp.API.v1.Controllers
             return Ok();
         }
 
+        // PUT: api/v1/Volunteer/5/UpdateInstallId
+        [HttpPut("{volunteerId}/UpdateInstallId")]
+        public async Task<ActionResult> ÛpdateInstallId(string volunteerId, [FromBody] string installId)
+        {
+            var volunteer = VolunteerRepository.Read(volunteerId);
+            volunteer.InstallId = installId;
+            await VolunteerRepository.UpdateAsync(volunteer, volunteerId);
+            return Ok();
+        }
+
         // DELETE: api/v1/Volunteer/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
