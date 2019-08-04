@@ -14,7 +14,9 @@ namespace VolontApp.DAL
             {
                 Urls = settings.Urls,
                 Database = settings.Database,
-                Certificate = new X509Certificate2(settings.CertificatePath, settings.CertificatePassword)
+                Certificate = string.IsNullOrWhiteSpace(settings.CertificatePassword) 
+                    ? new X509Certificate2(settings.CertificatePath)
+                    : new X509Certificate2(settings.CertificatePath, settings.CertificatePassword, X509KeyStorageFlags.MachineKeySet)
             }.Initialize();
         }
 
