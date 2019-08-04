@@ -2,6 +2,6 @@ namespace VolontApp.Models
 {
     public class Volunteer : Worker
     {
-        public Coordinator Coordinator { get; set; }
+        public string CoordinatorId { get; set; }
     }
 }

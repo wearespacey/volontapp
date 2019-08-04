@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using VolontApp.Models;
 
@@ -61,52 +62,24 @@ namespace VolontApp.DAL.Repositories
             }
             return id;
         }
-        
-        public override Coordinator Read(string id)
+
+        public Coordinator ReadByInstallId(string installId)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
+            if (string.IsNullOrWhiteSpace(installId)) throw new ArgumentNullException(nameof(installId));
 
             using (IDocumentSession session = this.Store.OpenSession())
             {
-                Coordinator coordinator = session
-                    .Include<Coordinator>(c => c.VolunteerIds)
-                    .Load<Coordinator>(id);
-
-                if (coordinator.VolunteerIds != null)
-                {
-                    coordinator.Volunteers = new List<Volunteer>();
-                    foreach (string volunteerId in coordinator.VolunteerIds)
-                    {
-                        coordinator.Volunteers.Add(session.Load<Volunteer>(volunteerId));
-                    }
-                    coordinator.VolunteerIds = null;
-                }
-
-                return coordinator;
+                return session.Query<Coordinator>().FirstOrDefault(v => v.InstallId == installId);
             }
         }
 
-        public override async Task<Coordinator> ReadAsync(string id)
+        public Task<Coordinator> ReadByInstallIdAsync(string installId)
         {
-            if (string.IsNullOrWhiteSpace(id)) throw new ArgumentNullException(nameof(id));
+            if (string.IsNullOrWhiteSpace(installId)) throw new ArgumentNullException(nameof(installId));
 
-            using (IAsyncDocumentSession session = this.Store.OpenAsyncSession())
+            using (IDocumentSession session = this.Store.OpenSession())
             {
-                Coordinator coordinator = await session
-                    .Include<Coordinator>(c => c.VolunteerIds)
-                    .LoadAsync<Coordinator>(id);
-
-                if (coordinator.VolunteerIds != null)
-                {
-                    coordinator.Volunteers = new List<Volunteer>();
-                    foreach (string volunteerId in coordinator.VolunteerIds)
-                    {
-                        coordinator.Volunteers.Add(await session.LoadAsync<Volunteer>(volunteerId));
-                    }
-                    coordinator.VolunteerIds = null;
-                }
-
-                return coordinator;
+                return session.Query<Coordinator>().FirstOrDefaultAsync(v => v.InstallId == installId);
             }
         }
     }

@@ -14,7 +14,6 @@ namespace VolontApp.Models
 
         public string PhoneNumber { get; set; }
 
-        public Case Case { get; set; }
         public string CaseId { get; set; }
     }
 }

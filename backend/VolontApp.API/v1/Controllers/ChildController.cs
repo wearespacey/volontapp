@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
 
-namespace VolontApp.API.Controllers
+namespace VolontApp.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [
+        ApiController,
+        ApiVersion("1.0"),
+        Route("api/v{version:apiVersion}/[controller]")
+    ]
     public class ChildController : ControllerBase
     {
         public ChildRepository ChildRepository { get; set; }
@@ -18,21 +21,22 @@ namespace VolontApp.API.Controllers
             this.ChildRepository = childRepository;
         }
 
-        // GET: api/Child
+        // GET: api/v1/Child
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Child>>> GetAll()
         {
-            return Ok(await ChildRepository.ReadAllAsync());
+            var children = await ChildRepository.ReadAllAsync();
+            return Ok(children);
         }
 
-        // GET: api/Child/5
+        // GET: api/v1/Child/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Child>> GetById(string id)
+        public ActionResult<Child> GetById(string id)
         {
-            return Ok(await ChildRepository.ReadAsync(id));
+            return Ok(ChildRepository.Read(id));
         }
 
-        // POST: api/Child
+        // POST: api/v1/Child
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Child value)
         {
@@ -40,7 +44,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Child/5
+        // PUT: api/v1/Child/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Child value)
         {
@@ -48,7 +52,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // DELETE: api/Child/5
+        // DELETE: api/v1/Child/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

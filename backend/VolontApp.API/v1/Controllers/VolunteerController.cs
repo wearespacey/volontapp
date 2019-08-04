@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
 
-namespace VolontApp.API.Controllers
+namespace VolontApp.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [
+        ApiController,
+        ApiVersion("1.0"),
+        Route("api/v{version:apiVersion}/[controller]")
+    ]
     public class VolunteerController : ControllerBase
     {
         public VolunteerRepository VolunteerRepository { get; set; }
@@ -18,21 +21,22 @@ namespace VolontApp.API.Controllers
             this.VolunteerRepository = volunteerRepository;
         }
 
-        // GET: api/Volunteer
+        // GET: api/v1/Volunteer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Volunteer>>> GetAll()
         {
             return Ok(await VolunteerRepository.ReadAllAsync());
         }
 
-        // GET: api/Volunteer/5
+        // GET: api/v1/Volunteer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Volunteer>> GetById(string id)
+        public ActionResult<Volunteer> GetById(string id)
         {
-            return Ok(await VolunteerRepository.ReadAsync(id));
+            var volunteer = VolunteerRepository.Read(id);
+            return Ok(volunteer);
         }
 
-        // GET: api/Volunteer/ByCoordinator/5
+        // GET: api/v1/Volunteer/ByCoordinator/5
         [HttpGet("ByCoordinator/{id}")]
         public async Task<ActionResult<IEnumerable<Volunteer>>> GetByCoordinatorId(string id)
         {
@@ -40,7 +44,7 @@ namespace VolontApp.API.Controllers
         }
 
 
-        // POST: api/Volunteer
+        // POST: api/v1/Volunteer
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Volunteer value)
         {
@@ -48,7 +52,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Volunteer/5
+        // PUT: api/v1/Volunteer/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Volunteer value)
         {
@@ -56,7 +60,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // DELETE: api/Volunteer/5
+        // DELETE: api/v1/Volunteer/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

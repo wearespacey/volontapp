@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace VolontApp.API
+namespace VolontApp.API.Infrastructure
 { 
     /// <summary>
     /// Configures the Swagger generation options.
@@ -29,6 +29,7 @@ namespace VolontApp.API
             foreach (var description in Provider.ApiVersionDescriptions)
             {
                 options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+                options.EnableAnnotations();
             }
         }
 
@@ -36,11 +37,9 @@ namespace VolontApp.API
         {
             var info = new Info()
             {
-                Title = "First ChildFocus Public API",
+                Title = "Glue API | ChildFocus",
                 Version = description.ApiVersion.ToString(),
-                Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
                 Contact = new Contact() { Name = "Tinaël Devresse", Email = "tinael.devresse@mic-belgique.be" },
-                TermsOfService = "Shareware",
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
             };
 
