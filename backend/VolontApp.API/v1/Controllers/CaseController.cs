@@ -23,7 +23,7 @@ namespace VolontApp.API.Controllers
 
         // GET: api/Case
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Case>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             return Ok(await CaseRepository.ReadAllAsync());
         }
