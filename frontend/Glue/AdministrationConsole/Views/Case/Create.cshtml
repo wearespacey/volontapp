@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VolontApp.Models.Volunteer>;
+﻿@model IEnumerable<VolontApp.Models.Coordinator>;
 
 @{ 
     string childId = ViewData["childId"].ToString();
@@ -9,8 +9,8 @@
     <input value="@childId" name="childId" type="hidden" />
 
     <div class="form-group">
-        <label for="volunteer">Responsable</label>
-        <select id="volunteer" name="volunteerId">
+        <label for="coordinator">Responsable</label>
+        <select id="coordinator" name="coordinatorId">
             @foreach (var c in Model)
             {
                 <option value="@c.Id">@c.FirstName @c.Surname</option>

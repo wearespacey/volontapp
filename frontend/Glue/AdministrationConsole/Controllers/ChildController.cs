@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AdministrationConsole.Models;
 using AdministrationConsole.Services;
+using VolontApp.Models;
 
 namespace AdministrationConsole.Controllers
 {
@@ -13,15 +14,15 @@ namespace AdministrationConsole.Controllers
     public class ChildController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(ApiService.GetChildren());
+            return View(await ApiService.GetChildrenAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Detail(string id)
+        public async Task<IActionResult> Detail(string id)
         {
-            return View(ApiService.GetChildById(id));
+            return View(await ApiService.GetChildByIdAsync(id));
         }
 
         [HttpGet("create")]
@@ -31,15 +32,16 @@ namespace AdministrationConsole.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string surname, string firstname)
+        public async Task<IActionResult> CreateAsync(string firstName, string surName)
         {
-            ApiService.CreateChild(new Child()
+            await ApiService.CreateChildAsync(new Child()
             {
-                FirstName = firstname,
-                LastName = surname
+                Firstname = firstName,
+                Surname = surName
             });
 
             return RedirectToAction("Index", "child");
+
         }
     }
 }

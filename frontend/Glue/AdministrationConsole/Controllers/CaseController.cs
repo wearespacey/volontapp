@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AdministrationConsole.Models;
 using AdministrationConsole.Services;
 using Microsoft.AspNetCore.Mvc;
+using VolontApp.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,25 +15,27 @@ namespace AdministrationConsole.Controllers
     public class CaseController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(ApiService.GetCases());
+            var ccc = await ApiService.GetCasesAsync();
+            return View(ccc);
         }
 
         [HttpGet("create/{childId}")]
-        public IActionResult Create(string childId)
+        public async Task<IActionResult> Create(string childId)
         {
             ViewData["childId"] = childId;
-            return View(ApiService.GetCoordinators());
+            var ccc = await ApiService.GetCoordinatorsAsync();
+            return View(ccc);
         }
 
         [HttpPost]
-        public IActionResult Create(string childId, string volunteerId, DateTime missingDate)
+        public async Task<IActionResult> CreateAsync(string childId, string coordinatorId, DateTime missingDate)
         {
-            ApiService.CreateCase(new Case()
+            await ApiService.CreateCaseAsync(new Case()
             {
                 ChildId = childId,
-                VolunteerId = volunteerId,
+                CoordinatorId = coordinatorId,
                 MissingDate = missingDate
             });
 

@@ -1,10 +1,12 @@
-﻿@model IEnumerable<Child>
+﻿@using VolontApp.Models;
+@model IEnumerable<Child>
 
+<h1>Enfants disparus</h1>
 <table class="table">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Nom</th>
+            <th>Nom Prénom</th>
         </tr>
     </thead>
     <tbody>
@@ -12,8 +14,9 @@
         {
             <tr>
                 <td>@i.Id</td>
-                <td>@Html.ActionLink(@i.FirstName +" "+ i.LastName, "Detail", "Child", new { id = i.Id })</td>
+                <td>@Html.ActionLink(@i.Surname +" "+ i.Firstname, "Detail", "Child", new { id = i.Id })</td>
             </tr>
         }
     </tbody>
 </table>
+@Html.ActionLink("Add", "Create", "child")
