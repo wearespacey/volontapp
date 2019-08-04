@@ -1,0 +1,26 @@
+﻿@model IEnumerable<VolontApp.Models.Volunteer>;
+
+@{ 
+    string childId = ViewData["childId"].ToString();
+}
+
+<h1>Ajouter un cas de disparition</h1>
+<form action="/case" method="post">
+    <input value="@childId" name="childId" type="hidden" />
+
+    <div class="form-group">
+        <label for="volunteer">Responsable</label>
+        <select id="volunteer" name="volunteerId">
+            @foreach (var c in Model)
+            {
+                <option value="@c.Id">@c.FirstName @c.Surname</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="missingDate">Missingdate</label>
+        <input id="missingDate" type="date" name="missingDate" />
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>

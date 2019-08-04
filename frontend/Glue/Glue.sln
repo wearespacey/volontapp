@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glue", "Glue\Glue\Glue.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VolontApp.Models", "..\..\backend\VolontApp.Models\VolontApp.Models.csproj", "{B8C8FD2A-8DA7-4711-AB95-ADDC356C4798}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdministrationConsole", "AdministrationConsole\AdministrationConsole.csproj", "{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{B8C8FD2A-8DA7-4711-AB95-ADDC356C4798}.Release|iPhone.Build.0 = Release|Any CPU
 		{B8C8FD2A-8DA7-4711-AB95-ADDC356C4798}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{B8C8FD2A-8DA7-4711-AB95-ADDC356C4798}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|iPhone.Build.0 = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{AE166A13-9165-4F4F-98DF-DC4CD0B5A476}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

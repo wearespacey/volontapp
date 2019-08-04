@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Case>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Volunteer Id</th>
+            <th>Child Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model)
+        {
+        <tr>
+            <td>@i.Id</td>
+            <td>@i.VolunteerId</td>
+            <td>@Html.ActionLink(@i.ChildId, "Detail", "Child", new { id = i.ChildId } )</td>
+        </tr>
+        }
+    </tbody>
+</table>
