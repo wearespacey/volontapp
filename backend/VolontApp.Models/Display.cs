@@ -13,5 +13,8 @@ namespace VolontApp.Models
         public DateTime? DateRemoved { get; set; } = DateTime.UtcNow;
 
         public string PhoneNumber { get; set; }
+
+        public Case Case { get; set; }
+        public string CaseId { get; set; }
     }
 }

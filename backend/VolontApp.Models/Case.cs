@@ -33,5 +33,9 @@ namespace VolontApp.Models
         public string MissingDescription { get; set; }
 
         public string MissingPicture { get; set; }
+
+        public IEnumerable<Display> Displays { get; set; }
+        public IEnumerable<string> DisplayIds { get; set; }
+
     }
 }
