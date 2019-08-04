@@ -1,10 +1,10 @@
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace VolontApp.Models
 {
     public class Worker
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 
@@ -12,6 +12,9 @@ namespace VolontApp.Models
 
         public string PhoneNumber{ get; set; }
 
+        //[Required]
         public string InstallId { get; set; }
+
+        public string Location { get; set; }
     }
 }

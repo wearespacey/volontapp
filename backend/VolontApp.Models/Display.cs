@@ -4,7 +4,7 @@ namespace VolontApp.Models
 {
     public class Display
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
         public Coordinates Location { get; set; } = new Coordinates();
 
@@ -13,5 +13,8 @@ namespace VolontApp.Models
         public DateTime? DateRemoved { get; set; } = DateTime.UtcNow;
 
         public string PhoneNumber { get; set; }
+
+        public Case Case { get; set; }
+        public string CaseId { get; set; }
     }
 }

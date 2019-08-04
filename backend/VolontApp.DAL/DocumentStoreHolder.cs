@@ -12,9 +12,11 @@ namespace VolontApp.DAL
 
             Store = new DocumentStore
             {
-                Urls = new[] { settings.Url },
-                Database = settings.DefaultDatabase,
-                Certificate = new X509Certificate2(settings.CertificatePath)
+                Urls = settings.Urls,
+                Database = settings.Database,
+                Certificate = string.IsNullOrWhiteSpace(settings.CertificatePassword) 
+                    ? new X509Certificate2(settings.CertificatePath)
+                    : new X509Certificate2(settings.CertificatePath, settings.CertificatePassword, X509KeyStorageFlags.MachineKeySet)
             }.Initialize();
         }
 
