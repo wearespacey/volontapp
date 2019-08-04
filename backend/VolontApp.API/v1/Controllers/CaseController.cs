@@ -4,53 +4,78 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
+using VolontApp.DTO;
 using VolontApp.Models;
 
-namespace VolontApp.API.Controllers
+namespace VolontApp.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [
+        ApiController,
+        ApiVersion("1.0"),
+        Route("api/v{version:apiVersion}/[controller]")
+    ]
     public class CaseController : ControllerBase
     {
         public CaseRepository CaseRepository { get; set; }
         public VolunteerRepository VolunteerRepository { get; set; }
 
-        public CaseController(CaseRepository caseRepository, VolunteerRepository volunteerRepository)
+        public CoordinatorRepository CoordinatorRepository { get; set; }
+
+        public CaseController(CaseRepository caseRepository, VolunteerRepository volunteerRepository, CoordinatorRepository coordinatorRepository)
         {
             CaseRepository = caseRepository;
             VolunteerRepository= volunteerRepository;
+            CoordinatorRepository = coordinatorRepository;
         }
 
-        // GET: api/Case
+        // GET: api/v1/Case
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await CaseRepository.ReadAllAsync());
         }
 
-        // GET: api/Case/5
+        // GET: api/v1/Case/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Case>> GetById(string id)
+        public ActionResult<Case> GetById(string id)
         {
-            return Ok(await CaseRepository.ReadAsync(id));
+            return Ok(CaseRepository.Read(id));
         }
 
-        // GET: api/Case/ByChildAndCoordinator/5
-        [HttpGet("ByChildAndCoordinator/{childId}")]
-        public async Task<ActionResult<Case>> GetByChildAndCoordinator(string childId, [FromBody] string installId)
+        // GET: api/v1/Case/ByCoordinator/5
+        [HttpGet("ByCoordinator/{coordinatorId}")]
+        public async Task<ActionResult<Case>> GetByCoordinator(string coordinatorId)
+        {
+            return Ok((await CaseRepository.ReadAllAsync()).Where(c => c.MissingStatus != MissingStatus.Found
+                                                                    && c.CoordinatorId == coordinatorId));
+        }
+
+        // GET: api/v1/Case/ByChild/5
+        [HttpGet("ByChild/{childId}")]
+        public async Task<ActionResult<Case>> GetByChild(string childId)
+        {
+            return Ok((await CaseRepository.ReadAllAsync()).Where(c => c.MissingStatus != MissingStatus.Found 
+                                                                    && c.ChildId == childId));
+        }
+
+        // GET: api/v1/Case/ByChildAndCoordinator
+        [HttpGet("ByChildAndCoordinator")]
+        public async Task<ActionResult<Case>> GetByChildAndCoordinator([FromBody] ChildAndCoordinator childAndCoordinator)
         {
             return Ok((await CaseRepository.ReadAllAsync())
-                .FirstOrDefault(c => c.MissingStatus != MissingStatus.Found && c.Child.Id == childId && c.Coordinator.InstallId == installId));
+                .FirstOrDefault(c => c.MissingStatus != MissingStatus.Found 
+                                     && c.ChildId == childAndCoordinator.ChildId
+                                     && c.CoordinatorId == childAndCoordinator.CoordinatorId));
         }
 
-        // POST: api/Case
+        // POST: api/v1/Case
         [HttpPost]
         public async Task<ActionResult<string>> Post([FromBody] Case value)
         {
             return Ok(await CaseRepository.CreateAsync(value, Guid.NewGuid().ToString()));
         }
 
-        // PUT: api/Case/5
+        // PUT: api/v1/Case/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Case value)
         {
@@ -58,7 +83,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Case/5/AddVolunteer
+        // PUT: api/v1/Case/5/AddVolunteer
         [HttpPut("{id}/AddVolunteer")]
         public async Task<ActionResult<Case>> AddVolunteer(string id, [FromBody] string installId)
         {
@@ -73,7 +98,7 @@ namespace VolontApp.API.Controllers
             return Ok(await CaseRepository.ReadAsync(id));
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/v1/Case/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
