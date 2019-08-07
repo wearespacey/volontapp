@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace VolontApp.Models
 {
-    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Case
     {
         public string Id { get; set; }
 
         public string CoordinatorId { get; set; }
-        public Coordinator Coordinator { get; set; }
 
         public List<string> VolunteerIds { get; set; }
-        public List<Volunteer> Volunteers { get; set; }
 
         public string ChildId { get; set; }
-        public Child Child { get; set; }
 
         public MissingStatus MissingStatus { get; set; } = MissingStatus.Missing;
 
@@ -34,7 +29,6 @@ namespace VolontApp.Models
 
         public string MissingPicture { get; set; }
 
-        public IEnumerable<Display> Displays { get; set; }
         public IEnumerable<string> DisplayIds { get; set; }
 
     }

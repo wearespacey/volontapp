@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
 
-namespace VolontApp.API.Controllers
+namespace VolontApp.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [
+        ApiController,
+        ApiVersion("1.0"),
+        Route("api/v{version:apiVersion}/[controller]")
+    ]
     public class DisplayController : ControllerBase
     {
         public DisplayRepository DisplayRepository { get; set; }
@@ -18,21 +21,21 @@ namespace VolontApp.API.Controllers
             this.DisplayRepository = displayRepository;
         }
 
-        // GET: api/Display
+        // GET: api/v1/Display
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Display>>> GetAll()
         {
             return Ok(await DisplayRepository.ReadAllAsync());
         }
 
-        // GET: api/Display/5
+        // GET: api/v1/Display/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Display>> GetById(string id)
+        public ActionResult<Display> GetById(string id)
         {
-            return Ok(await DisplayRepository.ReadAsync(id));
+            return Ok(DisplayRepository.Read(id));
         }
 
-        // POST: api/Display
+        // POST: api/v1/Display
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Display value)
         {
@@ -40,7 +43,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Display/5
+        // PUT: api/v1/Display/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Display value)
         {
@@ -48,7 +51,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // DELETE: api/Display/5
+        // DELETE: api/v1/Display/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {

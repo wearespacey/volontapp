@@ -3,6 +3,6 @@ namespace VolontApp.Models
     public class Volunteer : Worker
     {
         public bool IsNotified { get; set; } = false;
-        public Coordinator Coordinator { get; set; }
+        public string CoordinatorId { get; set; }
     }
 }

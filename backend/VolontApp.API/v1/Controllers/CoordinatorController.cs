@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using VolontApp.DAL.Repositories;
 using VolontApp.Models;
 
-namespace VolontApp.API.Controllers
+namespace VolontApp.API.v1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [
+        ApiController,
+        ApiVersion("1.0"),
+        Route("api/v{version:apiVersion}/[controller]")
+    ]
     public class CoordinatorController : ControllerBase
     {
 
@@ -19,21 +22,21 @@ namespace VolontApp.API.Controllers
             this.CoordinatorRepository = coordinatorRepository;
         }
 
-        // GET: api/Coordinator
+        // GET: api/v1/Coordinator
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Coordinator>>> GetAll()
         {
             return Ok(await CoordinatorRepository.ReadAllAsync());
         }
 
-        // GET: api/Coordinator/5
+        // GET: api/v1/Coordinator/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Coordinator>> GetById(string id)
+        public ActionResult<Coordinator> GetById(string id)
         {
-            return Ok(await CoordinatorRepository.ReadAsync(id));
+            return Ok(CoordinatorRepository.Read(id));
         }
 
-        // POST: api/Coordinator
+        // POST: api/v1/Coordinator
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Coordinator value)
         {
@@ -41,7 +44,7 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Coordinator/5
+        // PUT: api/v1/Coordinator/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(string id, [FromBody] Coordinator value)
         {
@@ -49,7 +52,17 @@ namespace VolontApp.API.Controllers
             return Ok();
         }
 
-        // DELETE: api/Coordinator/5
+        // PUT: api/v1/Coordinator/5/UpdateInstallId
+        [HttpPut("{coordinatorId}/UpdateInstallId")]
+        public async Task<ActionResult> ÛpdateInstallId(string coordinatorId, [FromBody] string installId)
+        {
+            var coordinator = CoordinatorRepository.Read(coordinatorId);
+            coordinator.InstallId = installId;
+            await CoordinatorRepository.UpdateAsync(coordinator, coordinatorId);
+            return Ok();
+        }
+
+        // DELETE: api/v1/Coordinator/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
