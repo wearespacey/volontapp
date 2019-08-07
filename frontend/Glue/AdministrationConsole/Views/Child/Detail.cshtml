@@ -1,0 +1,11 @@
+﻿@using VolontApp.Models;
+@model Child
+
+<h1>Profil d'enfant</h1>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Id</h5>
+        <p class="card-text">@Model.Firstname @Model.Surname</p>
+        <a href="/case/create/@Model.Id" class="btn btn-primary">Ajouter cas de dissparition</a>
+    </div>
+</div>
