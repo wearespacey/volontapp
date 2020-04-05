@@ -1,0 +1,23 @@
+﻿@using VolontApp.Models;
+@model IEnumerable<Case>
+
+<h1>Cas de disparition</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Coordinator name</th>
+            <th>Child name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.Id</td>
+                <td>@(i.Coordinator.FirstName +" "+i.Coordinator.Surname)</td>
+                <td>@Html.ActionLink(@i.Child.Firstname +" "+i.Child.Surname, "Detail", "Child", new { id = i.ChildId })</td>
+            </tr>
+        }
+    </tbody>
+</table>
